@@ -1,43 +1,6 @@
-# React Express Starter Pack
-
-> Create full stack apps with React and Express. Run your client and server with a single command. 
-
-### Redux Version
-This version does not include Redux
-[Click Here For Redux Version](https://github.com/bradtraversy/react_redux_express_starter) 
-
-## Quick Start
-
-``` bash
-# Install dependencies for server
-npm install
-
-# Install dependencies for client
-npm run client-install
-
-# Run the client & server with concurrently
-npm run dev
-
-# Run the Express server only
-npm run server
-
-# Run the React client only
-npm run client
-
-# Server runs on http://localhost:5000 and client on http://localhost:3000
-```
-
-## App Info
-
-### Author
-
-Brad Traversy
-[Traversy Media](http://www.traversymedia.com)
-
-### Version
-
-1.0.0
-
-### License
-
-This project is licensed under the MIT License
+# ADSL LAB MINI PROJECT
+## Commands 
+1. **npm run server** - It is used to run server.js at http://localhost:5000/
+2. **npm run client-install** - To install all the react dependencies. This can also be do by chnaging the directory into client (which is the react directory) and then doing npm install. 
+3. **npm run client** - To start the react development server. Its equivalent to cd client and then performing npm start.
+4. **npm run dev** - It is used to concurrently run the react development server and server.js file. *Use this or open two differnt terminals and do npm run server in one and npm run client in the other*

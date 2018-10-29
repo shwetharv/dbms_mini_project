@@ -1,17 +1,16 @@
 const express = require('express');
-
 const app = express();
-
-app.get('/api/customers', (req, res) => {
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-  ];
-
-  res.json(customers);
-});
-
 const port = 5000;
+var cors = require('cors');
+app.use(cors());
+app.get('/api/phones/',(req , res)=>{
+    const phones =[
+        {id:1, pbrand:'OnePlus', pname:'5T', pprice:"32,000"},
+        {id:2, pbrand:'OnePlus', pname:'6 Avengers Edition', pprice:"42,000"},
+        {id:3, pbrand:'Iphone', pname:'XS', pprice:"52,000"},
+        {id:4, pbrand:'Samsung', pname:'Galaxy J7', pprice:"12,000"}
+    ]
 
-app.listen(port, () => `Server running on port ${port}`);
+    res.json(phones);
+    }); 
+app.listen(port, ()=> console.log(`Server stated on port ${port}`));

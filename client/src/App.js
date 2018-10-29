@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import Customers from './components/customers';
-
+import Home from './pages/home';
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React Express Starter</h1>
-        </header>
-        <Customers />
+        <div className="content">
+          <Switch>
+            <Route path="/" exact component={Home}/>
+          </Switch>
+        </div>
       </div>
     );
   }
