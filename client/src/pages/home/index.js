@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './styles.module.css';
+import styles from './styles.css';
 export default class Home extends Component {
     constructor(){
         super();
@@ -16,11 +16,21 @@ export default class Home extends Component {
     render() {
     return (
       <div className="home">
-        <h1>React app</h1>
-        <p> This paragraph is in the home component</p>
-        <ul>
-            {this.state.phones.map(phones => <li key={phones.id}>{phones.pbrand} {phones.pname}</li>)}
-        </ul>
+        <div className="main-overlay">
+        <h1>PhoneGeeks</h1>
+        <input placeholder="Search..." required="required" autofocus="" class="search-bar-landing"/>
+        <button id="search-action" class="search-icon-landing">
+            <img src={require('../../img/search.png')} />
+        </button>
+        </div>
+        <h1>Featured Phones</h1>
+        <div className="featured-phones-grid">
+            {this.state.phones.map(phones => 
+            <div className="featured-phones-item">
+            <img src={phones.img}/>
+            <h2>{phones.pbrand} {phones.pname}</h2>
+            </div>)}
+      </div>
       </div>
     );
   }
