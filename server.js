@@ -2,7 +2,15 @@ const express = require('express');
 var mysql = require('mysql');
 const app = express();
 const port = 5000;
+const bodyParser = require('body-parser');
 var cors = require('cors');
+var login = require('./login');
+const bcrypt = require('bcrypt');
+var saltRounds=8;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(cors());
 let connection = mysql.createConnection({
     host: 'localhost',
@@ -29,7 +37,25 @@ app.get('/api/phones/',(req , res)=>{
 
     res.json(phones);
     }); 
-    app.get('/api/phones/all/', function(req, res){
+
+app.post('/signup',function(req,res){
+  let response= req.body;
+  console.log(response);
+  let myPlaintextPassword=response.password;
+  bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+    let sql =`INSERT INTO user(uname,password,uemail) VALUES (?,?,?)`;
+    let creds=[response.uname,hash,response.email];
+    connection.query(sql, creds, (error, results, fields) => {
+      if (error) {
+        return console.error(error.message);
+      }
+      console.log(results);
+      res.json(results);
+      });
+  });
+});
+
+app.get('/api/phones/all/', function(req, res){
         let sql = `SELECT * FROM phone`;
         connection.query(sql, (error, results, fields) => {
           if (error) {
@@ -37,7 +63,7 @@ app.get('/api/phones/',(req , res)=>{
           }
           console.log(results);
           res.json(results);
-        });
+    });
         
     });
 app.get('/api/phones/:id', function(req, res){
