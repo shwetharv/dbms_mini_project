@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import styles from './styles.css';
-//import { Link } from 'react-router-dom'npm 
-export default class SignUp extends Component {
+import './styles.css';
+//import { Link } from 'react-router-dom'
+export default class Login extends Component {
     constructor(){
         super();
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -9,46 +9,39 @@ export default class SignUp extends Component {
 handleSubmit(event){
      event.preventDefault();
      //var self=this;
-     var data= new FormData(document.getElementById('signup'));
+     var data= new FormData(document.getElementById('login'));
      console.log(data);
-     fetch('http://localhost:5000/signup/', {
+     fetch('http://localhost:5000/login/', {
             method: 'POST',
+            datatype:'json',
             headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json"
         },
             body:  JSON.stringify({
-                email: document.getElementById('email').value,
                 uname: document.getElementById('uname').value,
                 password: document.getElementById('password').value
             })
         }).then(function(response) {
-            if (response.ok){
-                return response.json();
-              } else {
-                throw new Error ('Something went wrong with your fetch');
-              }
+              return response.json();
             }).then(function(body) {
                 console.log(body);
+            }).catch(function(error) {
+                console.log(error);
             }); 
 }
 
 render(){
     return (
-      <div className="signup">
-        <form id="signup" onSubmit={this.handleSubmit}>
+      <div className="login">
+        <form id="login" onSubmit={this.handleSubmit}>
             <div className="header">
-                <h3>Sign Up</h3>
-                <p>Join us to review your favorite gadgets!</p>
+                <h3>Login</h3>
             </div>
             <div className="sep"></div>
             <div className="inputs">
                 <input id="uname" type="text" placeholder="Username"/>
-                <input id="email" type="email" placeholder="E-mail"/>
                 <input id="password" type="password" placeholder="Password" />
-            <div className="checkboxy">
-                <input name="checky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms of use</label>
-            </div>
             <input type="submit" value="Submit" />
             </div>
         </form>
