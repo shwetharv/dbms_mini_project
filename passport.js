@@ -4,6 +4,14 @@ var LocalStratergy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 
+//jwt
+var JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+//opts.jwtFromRequest = ExtractJwt.fromAuthHeader();
+opts.secretOrKey = 'secret keyy';
+
 //db connection
 let connection = mysql.createConnection({
     host: 'localhost',
@@ -21,10 +29,10 @@ connection.connect(function(err) {
   });
 
 module.exports = function(passport){
-    passport.use(new LocalStratergy(function(username,password,done){
+    passport.use(new JwtStrategy(function(jwt_payload,done){
         //Match Username
         let sql = `SELECT * FROM users where uname=? `;
-        let uname=[username];
+        let uname=[jwt_payload.username];
         connection.query(sql, (error, results, fields) => {
           if (error) {
             return console.error(error.message);
@@ -35,7 +43,7 @@ module.exports = function(passport){
                 if(err)
                     throw err;
                 if(isMatch){
-                    return done(null,user);
+                    return done(null,user,{message: 'Logged In Successfully'});
                     
                 } else{
                     return done(null,false,{message:"Wrong Password"});
@@ -53,4 +61,16 @@ module.exports = function(passport){
           done(err, user);
         });
       });
+
+      //jwt 
+    passport.use(new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey   : 'muku bear hodor'
+    },
+    function (jwtPayload, cb) {
+
+        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+        console.log("find user id needed");
+    }
+));
 }

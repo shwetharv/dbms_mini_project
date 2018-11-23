@@ -21,7 +21,7 @@ export default class PhoneDetails extends Component {
     return (
         <div className="phone-details">
             <div className="phone-image">
-                <div><img alt="phone picture"  src={"https://cdn2.gsmarena.com/vv/pics/oneplus/oneplus-6t-thunder-purple-1.jpg"}/></div>
+                <div><img alt="phone"  src={"https://cdn2.gsmarena.com/vv/pics/oneplus/oneplus-6t-thunder-purple-1.jpg"}/></div>
                 <div className="big-text">One Plus 5T
                 <div></div>
                 </div>

@@ -11,9 +11,8 @@ handleSubmit(event){
      //var self=this;
      var data= new FormData(document.getElementById('login'));
      console.log(data);
-     fetch('http://localhost:5000/login/', {
+     fetch('http://localhost:5000/login', {
             method: 'POST',
-            datatype:'json',
             headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json"
@@ -23,11 +22,13 @@ handleSubmit(event){
                 password: document.getElementById('password').value
             })
         }).then(function(response) {
-              return response.json();
+            if (response.ok){
+                return response.json();
+              } else {
+                throw new Error ('Something went wrong with your fetch');
+              }
             }).then(function(body) {
                 console.log(body);
-            }).catch(function(error) {
-                console.log(error);
             }); 
 }
 

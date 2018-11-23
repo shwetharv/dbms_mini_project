@@ -5,8 +5,6 @@ const app = express();
 const port = 5000;
 const bodyParser = require('body-parser');
 var cors = require('cors');
-var login = require('./passport');
-
 //bcrypt and saslt
 const bcrypt = require('bcrypt');
 var saltRounds=8;
@@ -18,7 +16,8 @@ app.use(bodyParser.json());
 
 
 //passport.js
-require('./passport')(passport);
+//require('./passport')(passport);
+
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -32,13 +31,14 @@ let connection = mysql.createConnection({
     password: 'chaliyan',
     database: 'mobile'
 });
-
+ 
 connection.connect(function(err) {
     if (err) {
       return console.error('error: ' + err.message);
     }
     console.log('Connected to the MySQL server.');
   });
+
 
 //signup 
 app.post('/signup',function(req,res){
@@ -47,7 +47,7 @@ app.post('/signup',function(req,res){
   let myPlaintextPassword=response.password;
   bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
     let sql =`INSERT INTO user(cuser,cemail,comment,cdate,time) VALUES (?,?,?,?,?OT )`;
-    let creds=[response.uname,hash,response.email];
+    let creds=[response.username,hash,response.email];
     connection.query(sql, creds, (error, results, fields) => {
       if (error) {
         return console.error(error.message);
@@ -56,6 +56,18 @@ app.post('/signup',function(req,res){
       res.json(results);
       });
   });
+});
+
+app.get('/api/phones/all/', function(req, res){
+  let sql = `SELECT * FROM phones`;
+  connection.query(sql, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    console.log(results);
+    res.json(results);
+  });
+  
 });
 
 //add comment
@@ -74,6 +86,7 @@ app.post('/addcomment',function(req,res){
 });
 
 //login
+/*
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
@@ -93,6 +106,8 @@ app.get('/api/phones/all/', function(req, res){
     });
         
     });
+*/
+
 
 //add phones
 app.post('/addphones',function(req,res){
@@ -129,10 +144,10 @@ app.get('/api/comments/:id', function(req,res){
         
     });
 
-    
+
 //returns json obj containing information of the phones with given id
 app.get('/api/phones/:id', function(req, res){
-        let sql = `SELECT * FROM phone WHERE id=`+ req.params.id ;
+        let sql = `SELECT * FROM phones WHERE id=`+ req.params.id ;
         connection.query(sql, (error, results, fields) => {
           if (error) {
             return console.error(error.message);

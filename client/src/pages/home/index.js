@@ -27,7 +27,7 @@ export default class Home extends Component {
         <div className="featured-phones-grid">
             {this.state.phones.map(phones => 
             <Link key={phones.id} to={"/phones/"+phones.id}><div className="featured-phones-item">
-            <img alt="phone-pic" src={phones.img}/>
+            <img alt="phone-pic" src={phones.imglink1}/>
             <h2>{phones.pbrand} {phones.pname}</h2>
             </div></Link>)}
       </div>
