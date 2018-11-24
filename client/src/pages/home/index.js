@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import styles from './styles.css';
+import './styles.css';
+import { Link } from 'react-router-dom'
 export default class Home extends Component {
     constructor(){
         super();
@@ -7,9 +8,8 @@ export default class Home extends Component {
             phones: []
         }
     }
-
     componentDidMount(){
-       fetch('/api/phones/')
+       fetch('/api/phones/all')
        .then(res => res.json())
        .then(phones => this.setState({phones},() => console.log(phones)));
     }
@@ -18,18 +18,18 @@ export default class Home extends Component {
       <div className="home">
         <div className="main-overlay">
         <h1>PhoneGeeks</h1>
-        <input placeholder="Search..." required="required" autofocus="" class="search-bar-landing"/>
-        <button id="search-action" class="search-icon-landing">
-            <img src={require('../../img/search.png')} />
+        <input placeholder="Search..." required="required" autoFocus="" className="search-bar-landing"/>
+        <button id="search-action" className="search-icon-landing">
+            <img alt="icon" src={require('../../img/search.png')} />
         </button>
         </div>
         <h1>Featured Phones</h1>
         <div className="featured-phones-grid">
             {this.state.phones.map(phones => 
-            <div className="featured-phones-item">
-            <img src={phones.img}/>
+            <Link key={phones.id} to={"/phones/"+phones.id}><div className="featured-phones-item">
+            <img alt="phone-pic" src={phones.imglink1}/>
             <h2>{phones.pbrand} {phones.pname}</h2>
-            </div>)}
+            </div></Link>)}
       </div>
       </div>
     );
