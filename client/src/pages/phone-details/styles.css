@@ -57,6 +57,7 @@ text-align: center;
     width: 1000px;
     background: #fff;
     display: inline-block;
+    margin-top: 10px;
 }
 .border {
     border: solid 1px #ccc;

@@ -27,8 +27,8 @@ app.use(cors());
 
 let connection = mysql.createConnection({
     host: 'localhost',
-    user: 'rohan',
-    password: 'chaliyan',
+    user: 'shwetha',
+    password: '2571998',
     database: 'mobile'
 });
  
